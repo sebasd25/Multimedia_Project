@@ -3,143 +3,92 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Custom Video Player — Stage 1</title>
+  <title>Custom Video Player — Stage 2</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#">
-        <span class="brand__logo">▶</span> Custom Video Player
-      </a>
-      <nav class="nav">
-        <a href="#player">Player</a>
-        <a href="#about">About</a>
-      </nav>
-    </div>
-  </header>
+  <main class="player-page">
+    <section class="player-card" aria-label="Custom video player">
+      <figure class="player">
+        <video
+          id="video"
+          class="player__video"
+          src="assets/video/sample.mp4"
+          preload="metadata"
+          playsinline
+        >
+          Sorry, your browser doesn’t support HTML5 video.
+        </video>
 
-  <!-- Hero / Player (fills the screen)  -->
-  <main>
-    <section id="player" class="hero">
-      <div class="container hero-inner">
-        <div class="hero-copy">
-          <h1>Watch. Control. Enjoy.</h1>
-          <p class="lead">Stage 1 — HTML &amp; CSS complete. Fully responsive layout with a custom control bar (visual only for now).</p>
-        </div>
+        <!-- Custom controls -->
+        <figcaption class="player__controls" aria-label="Player controls">
+          <div class="control-group control-group--grow">
+            <div class="progress"
+                 role="slider"
+                 aria-label="Seek"
+                 aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+                 tabindex="0">
+              <canvas id="timeline" class="timeline-canvas"></canvas>
+            </div>
+          </div>
 
-        <section class="player-card" aria-label="Custom video player">
-          <figure class="player">
-        
-            <video
-              id="video"
-              class="player__video"
-              src="assets/video/sample.mp4"
-              preload="metadata"
-              controls
-              playsinline
-              poster=""
-            >
-              Sorry, your browser doesn’t support HTML5 video.
-            </video>
+          <div class="control-group">
+            <button class="btn icon-btn" aria-label="Play/Pause" data-play>
+              <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
+                <path d="M8 5v14l11-7-11-7z"></path>
+              </svg>
+              <span class="sr-only">Play/Pause</span>
+            </button>
 
-            <!-- Custom controls  -->
-            <figcaption class="player__controls" aria-label="Player controls">
-              <!-- Progress -->
-              <div class="control-group control-group--grow">
-                <div class="progress" role="slider"
-                     aria-label="Seek"
-                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
-                     tabindex="0" aria-disabled="true">
-                  <div class="progress__track"></div>
-                  <div class="progress__filled" style="width: 0%;"></div>
-                </div>
-              </div>
+            <label class="range-wrap" aria-label="Volume">
+              <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
+                <path d="M3 10v4h4l5 5V5L7 10H3z"></path>
+              </svg>
+              <input class="range" type="range" min="0" max="1" step="0.01" value="1" data-volume />
+              <span class="sr-only">Volume</span>
+            </label>
 
-              <!-- Left controls -->
-              <div class="control-group">
-                <button class="btn icon-btn" aria-label="Play/Pause" disabled>
-                  <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
-                    <path d="M8 5v14l11-7-11-7z"></path>
-                  </svg>
-                  <span class="sr-only">Play/Pause</span>
-                </button>
+            <div class="select-wrap" aria-label="Playback speed">
+              <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
+                <path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 4h-2v6l5 3 .9-1.5-3.9-2.3V7z"/>
+              </svg>
+              <select class="select" data-speed>
+                <option>0.5×</option>
+                <option>0.75×</option>
+                <option selected>1×</option>
+                <option>1.25×</option>
+                <option>1.5×</option>
+                <option>2×</option>
+              </select>
+            </div>
+          </div>
 
-                <label class="range-wrap" aria-label="Volume">
-                  <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
-                    <path d="M3 10v4h4l5 5V5L7 10H3z"></path>
-                  </svg>
-                  <input class="range" type="range" min="0" max="1" step="0.01" value="1" disabled/>
-                  <span class="sr-only">Volume</span>
-                </label>
+          <div class="control-group">
+            <div class="select-wrap" aria-label="Quality">
+              <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
+                <path d="M4 6h16v12H4zM6 8h12v8H6z"></path>
+              </svg>
+              <select class="select" disabled>
+                <option selected>Auto</option>
+                <option>1080p</option>
+                <option>720p</option>
+                <option>480p</option>
+                <option>360p</option>
+              </select>
+            </div>
 
-                <div class="select-wrap" aria-label="Playback speed">
-                  <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
-                    <path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 4h-2v6l5 3 .9-1.5-3.9-2.3V7z"/>
-                  </svg>
-                  <select class="select" disabled>
-                    <option>0.5×</option>
-                    <option>0.75×</option>
-                    <option selected>1×</option>
-                    <option>1.25×</option>
-                    <option>1.5×</option>
-                    <option>2×</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Right controls -->
-              <div class="control-group">
-                <div class="select-wrap" aria-label="Quality">
-                  <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
-                    <path d="M4 6h16v12H4zM6 8h12v8H6z"></path>
-                  </svg>
-                  <select class="select" disabled>
-                    <option selected>Auto</option>
-                    <option>1080p</option>
-                    <option>720p</option>
-                    <option>480p</option>
-                    <option>360p</option>
-                  </select>
-                </div>
-
-                <button class="btn icon-btn" aria-label="Enter fullscreen" disabled>
-                  <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
-                    <path d="M7 14H5v5h5v-2H7v-3zm12 3h-3v2h5v-5h-2v3zM7 7h3V5H5v5h2V7zm12 0v3h2V5h-5v2h3z"></path>
-                  </svg>
-                  <span class="sr-only">Fullscreen</span>
-                </button>
-              </div>
-            </figcaption>
-          </figure>
-
-          <p class="note">
-            For Stage 1, the custom controls are visual only. Native controls above remain enabled.
-          </p>
-        </section>
-      </div>
-    </section>
-
-    <!--  About section  -->
-    <section id="about" class="about">
-      <div class="container">
-        <h2>About this project</h2>
-        <p>
-          A modern custom video player built in four stages: HTML/CSS (this milestone), Canvas API,
-          Web Audio API, and final polish/presentation. Fully responsive and accessible.
-        </p>
-      </div>
+            <button class="btn icon-btn" aria-label="Toggle fullscreen" data-fullscreen>
+              <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
+                <path d="M7 14H5v5h5v-2H7v-3zm12 3h-3v2h5v-5h-2v3zM7 7h3V5H5v5h2V7zm12 0v3h2V5h-5v2h3z"></path>
+              </svg>
+              <span class="sr-only">Fullscreen</span>
+            </button>
+          </div>
+        </figcaption>
+      </figure>
     </section>
   </main>
 
-  <!--  Footer  -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© 2025 Your Name — Faculty Project • Stage 1/4 complete</p>
-      <p class="muted">Next: Stage 2 (Canvas API) — implement custom timeline/seek.</p>
-    </div>
-  </footer>
+  <script src="player.js"></script>
 </body>
 </html>
-
